@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: ribbon-feign-client
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+  active:
+    profiles: default
+
+server:
+  port: 8000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 5
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    #    serviceUrl:
+    #      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
